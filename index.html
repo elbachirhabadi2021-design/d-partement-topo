@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Département de la Géodésie, la Topographie et la Photogrammétrie - IAV Hassan II Rabat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Import Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { height: 100vh; width: 100%; }
+    h2 { text-align: center; margin: 10px; font-family: Arial, sans-serif; }
+    .label {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #003366;
+      text-align: center;
+      box-shadow: 0 0 4px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Département de la Géodésie, la Topographie et la Photogrammétrie – IAV Hassan II Rabat</h2>
+  <div id="map"></div>
+
+  <script>
+    // 1️⃣ Initialiser la carte
+    var map = L.map('map').setView([33.97645, -6.8669], 18);
+
+    // 2️⃣ Ajouter le fond de carte
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 20,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 3️⃣ Coordonnées du polygone (lat, lon)
+    var polygonCoords = [
+      [33.97617047, -6.86709450],
+      [33.97634603, -6.86692321],
+      [33.97635374, -6.86694064],
+      [33.97638022, -6.86691779],
+      [33.97628409, -6.86677689],
+      [33.97630245, -6.86676181],
+      [33.97629425, -6.86674791],
+      [33.97641109, -6.86664012],
+      [33.97649618, -6.86677206],
+      [33.97652080, -6.86674803],
+      [33.97646238, -6.86666085],
+      [33.97654307, -6.86659394],
+      [33.97659466, -6.86666180],
+      [33.97667437, -6.86659394],
+      [33.97680176, -6.86678479],
+      [33.97672674, -6.86686112],
+      [33.97678926, -6.86694595],
+      [33.97671462, -6.86702040],
+      [33.97674002, -6.86707553],
+      [33.97667086, -6.86714527],
+      [33.97657082, -6.86701145],
+      [33.97647430, -6.86711417],
+      [33.97648719, -6.86713444],
+      [33.97631310, -6.86730007]
+    ];
+
+    // 4️⃣ Créer le polygone
+    var polygon = L.polygon(polygonCoords, {
+      color: 'blue',
+      weight: 3,
+      fillColor: '#4da6ff',
+      fillOpacity: 0.45
+    }).addTo(map);
+
+    // 5️⃣ Ajouter une popup
+    polygon.bindPopup("<b>Département de la Géodésie, la Topographie et la Photogrammétrie</b><br>IAV Hassan II – Rabat");
+
+    // 6️⃣ Centrer la carte sur le polygone
+    map.fitBounds(polygon.getBounds());
+
+    // 7️⃣ Calculer le centre du polygone et y afficher le nom
+    var center = polygon.getBounds().getCenter();
+    var label = L.divIcon({
+      className: 'label',
+      html: 'Département de la Géodésie,<br>la Topographie et la Photogrammétrie',
+      iconSize: [220, 40]
+    });
+    L.marker(center, { icon: label, interactive: false }).addTo(map);
+  </script>
+</body>
+</html>
